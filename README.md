@@ -1,10 +1,10 @@
 
-# Attentive Multimodal Fusion for Optical and Scene Flow
-## This is the official implementation of FusionRAFT(Accepted by RA-L).
+# Spatial-frequency Domain Transformed Optical and Scene Flow with Cross-Modal Knowledge Distillation
 ![](images/block_diagram.png)
 
-This paper presents an investigation into the estimation of optical and scene flow using RGBD information in scenarios where the RGB modality is affected by noise or captured in dark environments. Existing methods typically rely solely on RGB images or fuse the modalities at later stages, which can result in lower accuracy when the RGB information is unreliable. To address this issue, we propose a novel deep neural network approach named FusionRAFT, which enables early-stage information exchange between sensor modalities (RGB and depth). Our approach incorporates self- and cross-attention layers at different network levels to fuse these modalities and construct informative features that leverage the strengths of both modalities. Through comparative experiments, we demonstrate that our approach outperforms recent methods in terms of performance on the synthetic dataset Flyingthings3D, as well as the generalization on the real-world dataset KITTI. We illustrate that our approach exhibits improved robustness in the presence of noise and low-lighting conditions affecting the RGB images.
-## Code come soon
+This paper studies the problem of multimodal fusion for optical and scene flow from RGB and depth images, or point clouds.
+Previous methods fuse multimodal information in “early-fusion” or “late-fusion” strategies, in which attention mechanism is employed to address the problem of optical and scene flow estimation when RGB information is unreliable. Such attentive approaches either suffer from substantial computational and time complexities or lose the inherent characteristics of features due to downsampling.
+To address this issue, we propose a novel multimodal fusion approach named SFRAFT, which utilizes Fourier transform to build the spatial-frequency domain transformed self-attention and cross-attention. With the novel attentive mechanism, our approach can extract informative features more efficiently and effectively. We further enhance information exchange between the two modalities by incorporating multi-scale knowledge distillation.Experimental results on Flythings3D and KITTI show that our SFRAFT achieves the best performance with low computational and time complexity. We also prove the strong ability of our approach for flow estimation on our real-world dataset.
 ## Tested with
 * Ubuntu 20.04
 * Cuda 10.1
@@ -12,7 +12,7 @@ This paper presents an investigation into the estimation of optical and scene fl
 * torchvision=0.7.0
 * cudatoolkit=10.1
 ## Installation
-FusionRAFT requires our LieTorch package to be installed. Please see https://github.com/princeton-vl/lietorch for instructions (requires PyTorch >= 1.6). All Cuda kernels required for FusionRAFT will automatically be installed with LieTorch.
+SFRAFT requires our LieTorch package to be installed. Please see https://github.com/princeton-vl/lietorch for instructions (requires PyTorch >= 1.6). All Cuda kernels required for SFRAFT will automatically be installed with LieTorch.
 ## Download dataset
 * FlyingThings3D
 * KITTI
