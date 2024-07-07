@@ -40,5 +40,5 @@ class InstanceNorm2dParallel(nn.Module):
 
     def forward(self, x_parallel):
         return [getattr(self, 'insnorm_' + str(i))(x) for i, x in enumerate(x_parallel)]
-#旭哥，我不想用这个InstanceNorm2dParallel函数了，直接想换成ModuleParallel(nn.InstanceNorm2d(planes,affine=True, track_running_stats=True))，但是运行的时候发现
+
 
