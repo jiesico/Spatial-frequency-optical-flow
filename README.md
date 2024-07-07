@@ -1,80 +1,22 @@
-# RAFT
-This repository contains the source code for our paper:
 
-[RAFT: Recurrent All Pairs Field Transforms for Optical Flow](https://arxiv.org/pdf/2003.12039.pdf)<br/>
-ECCV 2020 <br/>
-Zachary Teed and Jia Deng<br/>
+# Attentive Multimodal Fusion for Optical and Scene Flow
+## This is the official implementation of FusionRAFT(Accepted by RA-L).
+![](images/block_diagram.png)
 
-<img src="RAFT.png">
-
-## Requirements
-The code has been tested with PyTorch 1.6 and Cuda 10.1.
-```Shell
-conda create --name raft
-conda activate raft
-conda install pytorch=1.6.0 torchvision=0.7.0 cudatoolkit=10.1 matplotlib tensorboard scipy opencv -c pytorch
-```
-
-## Demos
-Pretrained models can be downloaded by running
-```Shell
-./download_models.sh
-```
-or downloaded from [google drive](https://drive.google.com/drive/folders/1sWDsfuZ3Up38EUQt7-JDTT1HcGHuJgvT?usp=sharing)
-
-You can demo a trained model on a sequence of frames
-```Shell
-python demo.py --model=models/raft-things.pth --path=demo-frames
-```
-
-## Required Data
-To evaluate/train RAFT, you will need to download the required datasets. 
-* [FlyingChairs](https://lmb.informatik.uni-freiburg.de/resources/datasets/FlyingChairs.en.html#flyingchairs)
-* [FlyingThings3D](https://lmb.informatik.uni-freiburg.de/resources/datasets/SceneFlowDatasets.en.html)
-* [Sintel](http://sintel.is.tue.mpg.de/)
-* [KITTI](http://www.cvlibs.net/datasets/kitti/eval_scene_flow.php?benchmark=flow)
-* [HD1K](http://hci-benchmark.iwr.uni-heidelberg.de/) (optional)
-
-
-By default `datasets.py` will search for the datasets in these locations. You can create symbolic links to wherever the datasets were downloaded in the `datasets` folder
-
-```Shell
-├── datasets
-    ├── Sintel
-        ├── test
-        ├── training
-    ├── KITTI
-        ├── testing
-        ├── training
-        ├── devkit
-    ├── FlyingChairs_release
-        ├── data
-    ├── FlyingThings3D
-        ├── frames_cleanpass
-        ├── frames_finalpass
-        ├── optical_flow
-```
-
-## Evaluation
-You can evaluate a trained model using `evaluate.py`
-```Shell
-python evaluate.py --model=models/raft-things.pth --dataset=sintel --mixed_precision
-```
-
-## Training
-We used the following training schedule in our paper (2 GPUs). Training logs will be written to the `runs` which can be visualized using tensorboard
-```Shell
-./train_standard.sh
-```
-
-If you have a RTX GPU, training can be accelerated using mixed precision. You can expect similiar results in this setting (1 GPU)
-```Shell
-./train_mixed.sh
-```
-
-## (Optional) Efficent Implementation
-You can optionally use our alternate (efficent) implementation by compiling the provided cuda extension
-```Shell
-cd alt_cuda_corr && python setup.py install && cd ..
-```
-and running `demo.py` and `evaluate.py` with the `--alternate_corr` flag Note, this implementation is somewhat slower than all-pairs, but uses significantly less GPU memory during the forward pass.
+This paper presents an investigation into the estimation of optical and scene flow using RGBD information in scenarios where the RGB modality is affected by noise or captured in dark environments. Existing methods typically rely solely on RGB images or fuse the modalities at later stages, which can result in lower accuracy when the RGB information is unreliable. To address this issue, we propose a novel deep neural network approach named FusionRAFT, which enables early-stage information exchange between sensor modalities (RGB and depth). Our approach incorporates self- and cross-attention layers at different network levels to fuse these modalities and construct informative features that leverage the strengths of both modalities. Through comparative experiments, we demonstrate that our approach outperforms recent methods in terms of performance on the synthetic dataset Flyingthings3D, as well as the generalization on the real-world dataset KITTI. We illustrate that our approach exhibits improved robustness in the presence of noise and low-lighting conditions affecting the RGB images.
+## Code come soon
+## Tested with
+* Ubuntu 20.04
+* Cuda 10.1
+* pytorch=1.6.0
+* torchvision=0.7.0
+* cudatoolkit=10.1
+## Installation
+FusionRAFT requires our LieTorch package to be installed. Please see https://github.com/princeton-vl/lietorch for instructions (requires PyTorch >= 1.6). All Cuda kernels required for FusionRAFT will automatically be installed with LieTorch.
+## Download dataset
+* FlyingThings3D
+* KITTI
+* Our datasets
+<blockquote>
+We recorded a new indoor RGBD dataset using a Realsense D415 camera. This dataset features three lighting setups: Bright, Dimmed, and Dark. Each scenario is further divided into two splits: fast and slow motion. Each sequence contains two or more moving individuals and objects.
+</blockquote>
