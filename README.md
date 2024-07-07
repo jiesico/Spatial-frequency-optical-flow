@@ -1,6 +1,6 @@
 
 # Spatial-frequency Domain Transformed Optical and Scene Flow with Cross-Modal Knowledge Distillation
-![](images/block_diagram.png)
+![](block_diagram.png)
 
 This paper studies the problem of multimodal fusion for optical and scene flow from RGB and depth images, or point clouds.
 Previous methods fuse multimodal information in “early-fusion” or “late-fusion” strategies, in which attention mechanism is employed to address the problem of optical and scene flow estimation when RGB information is unreliable. Such attentive approaches either suffer from substantial computational and time complexities or lose the inherent characteristics of features due to downsampling.
