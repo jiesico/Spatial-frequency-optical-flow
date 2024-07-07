@@ -20,3 +20,6 @@ FusionRAFT requires our LieTorch package to be installed. Please see https://git
 <blockquote>
 We recorded a new indoor RGBD dataset using a Realsense D415 camera. This dataset features three lighting setups: Bright, Dimmed, and Dark. Each scenario is further divided into two splits: fast and slow motion. Each sequence contains two or more moving individuals and objects.
 </blockquote>
+
+## Acknowledgement
+The overall code framework is adapted from RAFT. We thank the authors for the contribution.
