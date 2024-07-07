@@ -5,6 +5,9 @@
 This paper studies the problem of multimodal fusion for optical and scene flow from RGB and depth images, or point clouds.
 Previous methods fuse multimodal information in “early-fusion” or “late-fusion” strategies, in which attention mechanism is employed to address the problem of optical and scene flow estimation when RGB information is unreliable. Such attentive approaches either suffer from substantial computational and time complexities or lose the inherent characteristics of features due to downsampling.
 To address this issue, we propose a novel multimodal fusion approach named SFRAFT, which utilizes Fourier transform to build the spatial-frequency domain transformed self-attention and cross-attention. With the novel attentive mechanism, our approach can extract informative features more efficiently and effectively. We further enhance information exchange between the two modalities by incorporating multi-scale knowledge distillation.Experimental results on Flythings3D and KITTI show that our SFRAFT achieves the best performance with low computational and time complexity. We also prove the strong ability of our approach for flow estimation on our real-world dataset.
+
+![]({iss}.png)
+
 ## Tested with
 * Ubuntu 20.04
 * Cuda 10.1
