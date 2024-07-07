@@ -13,7 +13,7 @@ evalset=(
 
 for seq in ${evalset[@]}; do
     # python evaluation_scripts/test_tum.py --datapath=$TUM_PATH/$seq --weights=droid.pth --disable_vis $@
-    python evaluate.py --model=checkpoints/setting3-2D/145000_raft-things.pth --dataset=flything3D --mixed_precision --split=$seq  $@
+    python evaluate.py --model=checkpoints/setting3-2D/things.pth --dataset=flything3D --mixed_precision --split=$seq  $@
 
 done
 
