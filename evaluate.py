@@ -473,69 +473,7 @@ def show_image(image,name):
     filename = name
     cv2.imwrite(filename, image)
 
-def validate_Tartanair(model,split = 'realtest4'):
-    """ Peform validation using the KITTI-2015 (train) split """
-    model.eval()
-    # val_dataset = datasets.Tartanairtest(root='/home/zhou/file8T/raft/FlyingThings3D', dstype='frames_cleanpass',split)
-    # val_dataset = datasets.Tartanairtest('/home/zhou/file8T/raft/FlyingThings3D', 'frames_cleanpass', split)
-    val_dataset = datasets.Tartanairtest(root='/home/zhou/file8T/raft/FlyingThings3D', dstype=split)
-    iters=24
-    iss = 0
-    print(split,len(val_dataset)-20)
-    out_list, epe_list = [], []
-    if not os.path.exists(split):
-        os.makedirs(split, exist_ok=True)
-    flow_folder = os.path.join(split, 'flow')
-    if not os.path.exists(flow_folder):
-        os.makedirs(flow_folder, exist_ok=True)
-    visresult_folder = os.path.join(split, 'visresult')
-    if not os.path.exists(visresult_folder):
-        os.makedirs(visresult_folder, exist_ok=True)
-    for val_id in range(len(val_dataset)):
 
-        image1, image2,depth1,depth2 = val_dataset[val_id]#img1, img2, flow, valid.float(),depth1,depth2
-        image1 = image1[None].cuda()
-        image2 = image2[None].cuda()
-        padder = InputPadder(image1.shape)
-        image1, image2 = padder.pad(image1, image2)
-        # print(depth1.shape)
-        mask = depth1< 2500
-        # print(mask.shape)
-        # image1s = image1
-        # image2s = image2
-        # stdv1 = iss % 10 # uniform
-        # if stdv1 == 0:
-        # image1 = image1*0
-        # image2 = image2*0
-        # else:
-        #     image1 = image1 / stdv1
-        #     image2 = image2 / stdv1
-        depth1 = cv2.resize(depth1,(image1.shape[3],image1.shape[2]))
-        depth2 = cv2.resize(depth2,(image2.shape[3],image2.shape[2]))
-        depth1 = processdepthss(depth1)
-        depth2 = processdepthss(depth2)
-        # print("depth",depth1.mean())
-        iss = iss + 1
-        flow_low, flow_pr = model(image1,image2,depth1,depth2, iters=iters, test_mode=True)
-        flows = padder.unpad(flow_pr[0]).cpu()
-        # print('3',flows.shape,image1.shape)
-        # visresult_path = os.path.join(visresult_folder, f'result_{iss:04d}.jpg')
-        # if iss > 20:
-        #     project_pixels_with_optical_flow(image1,image2,flows,iss,visresult_folder)
-        
-        flowss = padder.unpad(flow_pr[0]).permute(1, 2, 0).cpu().numpy()
-        # print(flowss.mean())
-        # mask = mask.cpu().numpy()
-        mask = np.expand_dims(mask, axis=2)
-        flowss = flowss*mask
-        flow_img = flow_viz.flow_to_image(flowss)
-        flow_image = Image.fromarray(flow_img)
-        # flow_image.save(f'ours-2d-flow/{iss}.png')
-        flow_path = os.path.join(flow_folder, f'{iss}.png')
-        # print(flow_path)
-        flow_image.save(flow_path)
-    # calculate_average_diff_from_file(visresult_folder)
-    return {0,0}
 @torch.no_grad()
 def validate_flything3D(model, iters=24):
     """ Peform validation using the KITTI-2015 (train) split """
